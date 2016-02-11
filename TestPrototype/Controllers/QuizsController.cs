@@ -13,9 +13,9 @@ namespace TestPrototype.Controllers
     public class QuizsController : Controller
     {
         private QuizContext db = new QuizContext();
-        public List<QuizQuestion> CreateQuiz(int length)
+        public List<QuizQuestion> CreateQuiz(int length, Topic top)
         {
-            List<MCQuestion> questions = db.MCQuestions.ToList();
+            List<MCQuestion> questions = db.MCQuestions.Where(q=>q.QuestionTopic.id== top.id).ToList();
             if (questions.Count < length)
                 return null;
             List<QuizQuestion> ret = new List<QuizQuestion>();
@@ -29,6 +29,7 @@ namespace TestPrototype.Controllers
                 {
                     var toAdd = new QuizQuestion();
                     toAdd.question = questions.ElementAt(r);
+                    toAdd.UserAnswer = Answer.NoAnswer;
                     db.QuizQuestions.Add(toAdd);
                     ret.Add(toAdd);
                     numsUsed.Add(r);
@@ -45,7 +46,29 @@ namespace TestPrototype.Controllers
             var quizs = db.Quizs.Include(q => q.QuestionTopic);
             return View(quizs.ToList());
         }
+        // GET: Quizs/Score/5
+        public ActionResult Score(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Quiz quiz = db.Quizs.Find(id);
+            if (quiz == null)
+            {
+                return HttpNotFound();
+            }
+            var correct = new List<Boolean>();
+            foreach (var q in quiz.Questions)
+            {
 
+                correct.Add(q.UserAnswer == q.question.CorrectAnswer);
+
+            }
+
+            ViewBag.correct = correct;
+            return View(quiz);
+        }
         // GET: Quizs/Details/5
         public ActionResult Details(int? id)
         {
@@ -81,7 +104,7 @@ namespace TestPrototype.Controllers
                 var top = db.Topics.Find(quiz.TopicId);
                 quiz.QuestionTopic = top;
                 top.Quizzes.Add(quiz);
-                quiz.Questions = CreateQuiz(quiz.QuizLength);
+                quiz.Questions = CreateQuiz(quiz.QuizLength,top);
                 db.Quizs.Add(quiz);
                
                 db.SaveChanges();
@@ -146,6 +169,7 @@ namespace TestPrototype.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Quiz quiz = db.Quizs.Find(id);
+            db.QuizQuestions.RemoveRange(quiz.Questions);
             db.Quizs.Remove(quiz);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace TestPrototype.Models
 {
-    public enum Answer { A, B, C, D };
+    public enum Answer {NoAnswer, A, B, C, D };
     public class Assesment
     {
         public Assesment()
