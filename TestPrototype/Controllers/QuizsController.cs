@@ -29,7 +29,7 @@ namespace TestPrototype.Controllers
                 {
                     var toAdd = new QuizQuestion();
                     toAdd.question = questions.ElementAt(r);
-                    toAdd.UserAnswer = Answer.NoAnswer;
+                    toAdd.UserAnswer = Answer.NA;
                     db.QuizQuestions.Add(toAdd);
                     ret.Add(toAdd);
                     numsUsed.Add(r);
@@ -46,6 +46,38 @@ namespace TestPrototype.Controllers
             var quizs = db.Quizs.Include(q => q.QuestionTopic);
             return View(quizs.ToList());
         }
+        // GET: Quizs/Take/5
+        public ActionResult Take(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Quiz quiz = db.Quizs.Find(id);
+            if (quiz == null)
+            {
+                return HttpNotFound();
+            }
+           
+            return View(quiz);
+        }
+
+        // POST: Quizs/Take/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Take([Bind(Include = "id,TopicId,QuizLength")] Quiz quiz)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(quiz).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.TopicId = new SelectList(db.Topics, "id", "Title", quiz.TopicId);
+            return View(quiz);
+        }
         // GET: Quizs/Score/5
         public ActionResult Score(int? id)
         {
@@ -58,15 +90,17 @@ namespace TestPrototype.Controllers
             {
                 return HttpNotFound();
             }
-            var correct = new List<Boolean>();
+            double correct = 0.0; //new List<Boolean>();
             foreach (var q in quiz.Questions)
             {
+                if (q.UserAnswer == q.question.CorrectAnswer)
+                    correct++;
 
-                correct.Add(q.UserAnswer == q.question.CorrectAnswer);
+                //correct.Add(q.UserAnswer == q.question.CorrectAnswer);
 
             }
 
-            ViewBag.correct = correct;
+            ViewBag.correct = (correct / quiz.QuizLength)*100;
             return View(quiz);
         }
         // GET: Quizs/Details/5

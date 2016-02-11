@@ -196,7 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AssesmentsController.cs" />
+    <Compile Include="Controllers\AssessmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MCQuestionsController.cs" />
@@ -274,11 +274,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Assesments\Create.cshtml" />
-    <Content Include="Views\Assesments\Delete.cshtml" />
-    <Content Include="Views\Assesments\Details.cshtml" />
-    <Content Include="Views\Assesments\Edit.cshtml" />
-    <Content Include="Views\Assesments\Index.cshtml" />
     <Content Include="Views\MCQuestions\Create.cshtml" />
     <Content Include="Views\MCQuestions\Delete.cshtml" />
     <Content Include="Views\MCQuestions\Details.cshtml" />
@@ -295,6 +290,12 @@
     <Content Include="Views\Quizs\Edit.cshtml" />
     <Content Include="Views\Quizs\Index.cshtml" />
     <Content Include="Views\Quizs\Score.cshtml" />
+    <Content Include="Views\Assessments\Create.cshtml" />
+    <Content Include="Views\Assessments\Delete.cshtml" />
+    <Content Include="Views\Assessments\Details.cshtml" />
+    <Content Include="Views\Assessments\Edit.cshtml" />
+    <Content Include="Views\Assessments\Index.cshtml" />
+    <Content Include="Views\Quizs\Take.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

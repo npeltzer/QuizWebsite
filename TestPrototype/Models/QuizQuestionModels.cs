@@ -6,10 +6,10 @@ using System.Web;
 
 namespace TestPrototype.Models
 {
-    public enum Answer {NoAnswer, A, B, C, D };
-    public class Assesment
+    public enum Answer {NA, A, B, C, D };
+    public class Assessment
     {
-        public Assesment()
+        public Assessment()
         {
             Quizzes = new List<Quiz>();
         }

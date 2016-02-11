@@ -1,0 +1,51 @@
+﻿@model TestPrototype.Models.Quiz
+
+@{
+    ViewBag.Title = "Take";
+}
+
+<h2>Take</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Quiz</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+      @foreach(var quest in Model.Questions) { 
+        <div class="form-group form-inline">
+            <label class ="control-label col-md-2" >@quest.question.Question</label>
+            <div class="col-md-10 form-control">
+              
+                <label> <input type="radio" value="1" /> A. @quest.question.A</label>
+                <label> @Html.RadioButton(quest.question.B, 2) B.  @quest.question.B</label>
+              
+                <label> @Html.RadioButton(quest.question.C, 3) C.  @quest.question.C</label>
+             
+
+                <label> @Html.RadioButton(quest.question.D, 4) D.  @quest.question.D</label>
+               
+            </div>
+        </div>
+
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

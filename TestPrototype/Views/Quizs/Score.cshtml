@@ -7,7 +7,7 @@
 <h2>Score</h2>
 
 <div>
-    <h4>@Html.DisplayFor(model => model.QuestionTopic.Title)</h4>
+    <h4>@Html.DisplayFor(model => model.QuestionTopic.Title) Quiz</h4>
     <hr />
     <table class="table">
         <tr>
@@ -16,26 +16,44 @@
             <th>Answer</th>
             @*<th>Correct</th>*@
         </tr>
-
+        @{double count = 0.0; }
         @foreach (var question in Model.Questions)
             {
             <tr>
                 <td>@question.question.Question</td>
                 <td>@question.UserAnswer</td>
                 <td>
-                    @if (question.UserAnswer== @question.question.CorrectAnswer)
+                    @if (question.UserAnswer == @question.question.CorrectAnswer)
                     {
-                              <span class="glyphicon glyphicon-ok text-success"></span>
+                        <span class="glyphicon glyphicon-ok text-success"></span>
+                        count++;
                     }
                     else
                     {
-                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                        <span class="glyphicon glyphicon-remove text-danger"></span>
                     }
                 </td>
 
             </tr>
         }
+        <tr>
+            <td></td>
+            <td></td>
+            @if (ViewBag.correct > 70)
+            {
+                <td class="text-success">
 
+                    <h3> @ViewBag.correct%</h3>
+                </td>
+            }
+            else
+            {
+                <td class="text-danger">
+
+                    <h3> @ViewBag.correct%</h3>
+                </td>
+            }
+        </tr>
 
 
 

@@ -25,6 +25,7 @@ namespace TestPrototype.Models
         public DbSet<Topic> Topics { get; set; }
         public DbSet<MCQuestion> MCQuestions { get; set; }
         public DbSet<QuizQuestion> QuizQuestions { get; set; }
-        public DbSet<Assesment> Assesments { get; set; }
+        public DbSet<Assessment> Assessments { get; set; }
+
     }
 }

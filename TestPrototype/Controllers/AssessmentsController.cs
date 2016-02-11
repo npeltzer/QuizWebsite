@@ -10,107 +10,108 @@ using TestPrototype.Models;
 
 namespace TestPrototype.Controllers
 {
-    public class AssesmentsController : Controller
+    public class AssessmentsController : Controller
     {
         private QuizContext db = new QuizContext();
 
-        // GET: Assesments
+        // GET: Assessments
         public ActionResult Index()
         {
-            return View(db.Assesments.ToList());
+            
+            return View(db.Assessments.ToList());
         }
 
-        // GET: Assesments/Details/5
+        // GET: Assessments/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assesment assesment = db.Assesments.Find(id);
-            if (assesment == null)
+            Assessment assessment = db.Assessments.Find(id);
+            if (assessment == null)
             {
                 return HttpNotFound();
             }
-            return View(assesment);
+            return View(assessment);
         }
 
-        // GET: Assesments/Create
+        // GET: Assessments/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Assesments/Create
+        // POST: Assessments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Name,Code")] Assesment assesment)
+        public ActionResult Create([Bind(Include = "id,Name,Code")] Assessment assessment)
         {
             if (ModelState.IsValid)
             {
-                db.Assesments.Add(assesment);
+                db.Assessments.Add(assessment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(assesment);
+            return View(assessment);
         }
 
-        // GET: Assesments/Edit/5
+        // GET: Assessments/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assesment assesment = db.Assesments.Find(id);
-            if (assesment == null)
+            Assessment assessment = db.Assessments.Find(id);
+            if (assessment == null)
             {
                 return HttpNotFound();
             }
-            return View(assesment);
+            return View(assessment);
         }
 
-        // POST: Assesments/Edit/5
+        // POST: Assessments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Name,Code")] Assesment assesment)
+        public ActionResult Edit([Bind(Include = "id,Name,Code")] Assessment assessment)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(assesment).State = EntityState.Modified;
+                db.Entry(assessment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(assesment);
+            return View(assessment);
         }
 
-        // GET: Assesments/Delete/5
+        // GET: Assessments/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assesment assesment = db.Assesments.Find(id);
-            if (assesment == null)
+            Assessment assessment = db.Assessments.Find(id);
+            if (assessment == null)
             {
                 return HttpNotFound();
             }
-            return View(assesment);
+            return View(assessment);
         }
 
-        // POST: Assesments/Delete/5
+        // POST: Assessments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Assesment assesment = db.Assesments.Find(id);
-            db.Assesments.Remove(assesment);
+            Assessment assessment = db.Assessments.Find(id);
+            db.Assessments.Remove(assessment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
