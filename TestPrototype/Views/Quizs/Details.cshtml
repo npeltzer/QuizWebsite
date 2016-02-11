@@ -1,0 +1,49 @@
+﻿@model TestPrototype.Models.Quiz
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Quiz</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionTopic.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuestionTopic.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuizLength)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuizLength)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Questions)
+        </dt>
+
+        <dd>
+            <ol style="margin-left:-25px;">
+            @foreach (var q in Model.Questions)
+            {
+                <li>
+                    @Html.ActionLink(q.question.Question, "details", "MCQuestions", new { id = q.question.id }, null)
+                </li>
+            }
+            </ol>
+
+        </dd>
+    </dl>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
