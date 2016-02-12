@@ -16,6 +16,7 @@ namespace TestPrototype.Models
         [Key] public int id { get; set; }
         public String Name { get; set; }
         public int Code { get; set; }
+
         public virtual List<Quiz> Quizzes { get; set; }
     }
   
@@ -29,6 +30,7 @@ namespace TestPrototype.Models
       [Display (Name="Topic")]
         public virtual Topic QuestionTopic { get; set; }
         public virtual List<QuizQuestion> Questions { get; set; }
+
         public int TopicId { get; set; }
         public int QuizLength { get; set; }
     }

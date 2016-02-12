@@ -16,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.id)
-
+  
         <div class="form-group">
             @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -64,7 +64,16 @@
                 @Html.ValidationMessageFor(model => model.CorrectAnswer, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionTopic, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
 
+                @Html.DropDownListFor((model => model.TopicId), new SelectList(ViewBag.Topics, "Id", "Title"),
+                  new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.QuestionTopic, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

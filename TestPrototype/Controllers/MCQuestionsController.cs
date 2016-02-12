@@ -74,6 +74,7 @@ namespace TestPrototype.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Topics = db.Topics.ToList();
             return View(mCQuestion);
         }
 
@@ -82,14 +83,19 @@ namespace TestPrototype.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Question,A,B,C,D,CorrectAnswer")] MCQuestion mCQuestion)
+        public ActionResult Edit([Bind(Include = "id,Question,A,B,C,D,CorrectAnswer,TopicId")] MCQuestion mCQuestion)
         {
             if (ModelState.IsValid)
             {
+               var top= db.Topics.Find(mCQuestion.TopicId);
+                mCQuestion.QuestionTopic = top;
+              
                 db.Entry(mCQuestion).State = EntityState.Modified;
+             
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Topics = db.Topics.ToList();
             return View(mCQuestion);
         }
 
