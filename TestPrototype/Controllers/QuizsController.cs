@@ -67,15 +67,19 @@ namespace TestPrototype.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Take([Bind(Include = "id,TopicId,QuizLength")] Quiz quiz)
+        public ActionResult Take([Bind(Include = "id,TopicId,QuizLength,Questions")] Quiz quiz)
         {
             if (ModelState.IsValid)
             {
+                foreach(var quest in quiz.Questions)
+                {
+                    db.Entry(quest).State = EntityState.Modified;
+                }
                 db.Entry(quiz).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "id", "Title", quiz.TopicId);
+
             return View(quiz);
         }
         // GET: Quizs/Score/5

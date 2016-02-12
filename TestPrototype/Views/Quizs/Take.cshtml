@@ -1,5 +1,5 @@
 ﻿@model TestPrototype.Models.Quiz
-
+@using TestPrototype.Models
 @{
     ViewBag.Title = "Take";
 }
@@ -10,30 +10,33 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Quiz</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.TopicId)
+        @Html.HiddenFor(model => model.QuizLength)
 
-      @foreach(var quest in Model.Questions) { 
-        <div class="form-group form-inline">
-            <label class ="control-label col-md-2" >@quest.question.Question</label>
-            <div class="col-md-10 form-control">
-              
-                <label> <input type="radio" value="1" /> A. @quest.question.A</label>
-                <label> @Html.RadioButton(quest.question.B, 2) B.  @quest.question.B</label>
-              
-                <label> @Html.RadioButton(quest.question.C, 3) C.  @quest.question.C</label>
-             
+        
+       @for (int i = 0; i < Model.QuizLength; i++)
+        {
 
-                <label> @Html.RadioButton(quest.question.D, 4) D.  @quest.question.D</label>
-               
+            @Html.HiddenFor(model => model.Questions[i].id)
+            <div class="form-group">
+                <label class="col-md-3">@Model.Questions[i].question.Question</label>
+                <div class="col-md-10">
+
+                    <div> @Html.RadioButtonFor((Model => Model.Questions[i].UserAnswer), Answer.A)A. @Model.Questions[i].question.A</div>
+                    <div> @Html.RadioButtonFor((Model => Model.Questions[i].UserAnswer), Answer.B)B. @Model.Questions[i].question.B</div>
+                    <div> @Html.RadioButtonFor((Model => Model.Questions[i].UserAnswer), Answer.C)C. @Model.Questions[i].question.C</div>
+                    <div> @Html.RadioButtonFor((Model => Model.Questions[i].UserAnswer), Answer.D)D. @Model.Questions[i].question.D</div>
+                </div>
             </div>
-        </div>
 
         }
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

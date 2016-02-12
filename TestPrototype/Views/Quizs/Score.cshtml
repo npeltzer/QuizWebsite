@@ -43,14 +43,14 @@
             {
                 <td class="text-success">
 
-                    <h3> @ViewBag.correct%</h3>
+                    <h3> @string.Format("{0:0.##}%", ViewBag.correct)</h3>
                 </td>
             }
             else
             {
                 <td class="text-danger">
 
-                    <h3> @ViewBag.correct%</h3>
+                    <h3> @string.Format("{0:0.##}%", ViewBag.correct)</h3>
                 </td>
             }
         </tr>
